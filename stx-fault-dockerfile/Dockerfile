@@ -1,8 +1,10 @@
 #
-# Dockerfile for fm-common
+# Dockerfile for stx-fault
 #
 
 FROM ubuntu:16.04
+
+RUN useradd -ms /bin/bash marce
 
 WORKDIR /localdisk
 
@@ -16,14 +18,25 @@ RUN apt-get install -y \
     vim \
     python-pip \
     gdb \
-    unzip
+    unzip \
+    netcat \
+    debmake \
+    sudo
 
-# For compilation
+# For building
 RUN apt-get install -y \
     uuid-dev \
     libpq-dev \
-    python-dev
+    python-dev \
+    libsnmp-dev
+
+# For building fm-mgr
+RUN apt-get install -y \
+    debhelper
 
 RUN pip install \
     pyyaml \
     SQLAlchemy
+
+ENV DEBEMAIL "marce@mail.com"
+ENV DEBFULLNAME "Marcela"
